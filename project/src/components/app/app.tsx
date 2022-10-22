@@ -1,12 +1,16 @@
 import MainScreen from '../../pages/main-screen/main-screen';
+// import LoginScreen from '../../pages/login-screen/login-screen';
+// import PropertyScreen from '../../pages/property-screen/property-screen';
 
 type AppScreenProps = {
-  cardsNumber: number;
+  offersNumber: number;
 }
 
-function App({cardsNumber}: AppScreenProps): JSX.Element {
+function App({offersNumber}: AppScreenProps): JSX.Element {
   return (
-    <MainScreen cardsNumber={cardsNumber}/>
+    <MainScreen offersNumber={offersNumber}/>
+    // <LoginScreen />
+    // <PropertyScreen />
   );
 }
 

@@ -4,7 +4,7 @@ import App from './components/app/app';
 
 
 const Settings = {
-  cardsNumber: 4,
+  offersNumber: 6,
 } as const;
 
 const root = ReactDOM.createRoot(
@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      cardsNumber={Settings.cardsNumber}
+      offersNumber={Settings.offersNumber}
     />
   </React.StrictMode>,
 );
