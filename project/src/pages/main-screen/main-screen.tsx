@@ -9,7 +9,7 @@ function MainScreen (props: MainScreenProps): JSX.Element {
   const offersList = [];
 
   for (let i = 0; i < offersNumber; i++) {
-    offersList.push(<CardScreen offerNumber={i} />);
+    offersList.push(<CardScreen key={i.toString()} offerNumber={i + 1} />);
   }
 
   return (
