@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppRoute } from '../../consts';
+import { offers } from '../../mocks/offers';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -15,11 +17,26 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<LayoutScreen isLoginPage={isLoginPage}/>}>
-          <Route index element={<MainScreen offersNumber={offersNumber}/>} />
-          <Route path='/login' element={<LoginScreen />} />
-          <Route path='/offer:id' element={<PropertyScreen />} />
-          <Route path='*' element={<NotFoundScreen />} />
+        <Route
+          path={AppRoute.Root}
+          element={<LayoutScreen isLoginPage={isLoginPage}/>}
+        >
+          <Route
+            index
+            element={<MainScreen offersNumber={offersNumber}/>}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginScreen />}
+          />
+          <Route
+            path={AppRoute.Offer}
+            element={<PropertyScreen offers={offers}/>}
+          />
+          <Route
+            path='*'
+            element={<NotFoundScreen />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
