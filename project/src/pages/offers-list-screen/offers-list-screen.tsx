@@ -10,10 +10,20 @@ type OfferListScreenProps = {
 function OffersListScreen (props: OfferListScreenProps):JSX.Element {
   const {offersNumber, offers} = props;
   const offersList = [];
-  // const [activeOffer, setActiveOffer] = useState<Offer>({});
+  const activeOffer = useState({} as Offer);
 
   for (let i = 0; i < offersNumber; i++) {
-    offersList.push(<CardScreen key={i.toString()} offer={offers[i]} />);
+    offersList.push(
+      <CardScreen
+        key={i.toString()}
+        offer={offers[i]}
+        setActiveOffer={
+          (currentOffer) => {
+            activeOffer[1](currentOffer);
+          }
+        }
+      />
+    );
   }
 
   return (

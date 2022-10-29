@@ -4,13 +4,18 @@ import { getRatingInProcent } from '../../utils';
 
 type CardScreenProps = {
   offer: Offer;
-}
+  setActiveOffer: (offer: Offer) => void;
+ }
 function CardScreen(props: CardScreenProps): JSX.Element {
-  const {offer} = props;
+  const {offer, setActiveOffer} = props;
 
   return (
     <Link to={`offer/${offer.id}`}>
-      <article className="cities__card place-card">
+      <article
+        onMouseOver={ () => setActiveOffer(offer) }
+        onMouseLeave={ () => setActiveOffer({} as Offer) }
+        className="cities__card place-card"
+      >
         {
           offer.isPremium &&
           <div className="place-card__mark">
