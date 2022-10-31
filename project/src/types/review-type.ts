@@ -1,4 +1,4 @@
-export type Rewiev = {
+export type Review = {
       'id': number;
       'user': {
         'id': number;

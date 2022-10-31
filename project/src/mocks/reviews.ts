@@ -1,6 +1,6 @@
-import { Rewiev } from '../types/rewiev-type';
+import { Review } from '../types/review-type';
 
-export const rewievs: Rewiev[] = [
+export const reviews: Review[] = [
   {
     'id': 1,
     'user': {
@@ -35,6 +35,6 @@ export const rewievs: Rewiev[] = [
     },
     'rating': 3,
     'comment': 'What an amazing view! The house is stunning and in an amazing location. The large glass wall had an amazing view of the river!',
-    'date': '2022-09-25T13:58:46.499Z'
+    'date': '2022-09-26T13:58:46.499Z'
   }
 ];
