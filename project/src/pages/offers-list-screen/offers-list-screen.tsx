@@ -3,32 +3,29 @@ import { Offer } from '../../types/offer-type';
 import CardScreen from '../card-screen/card-screen';
 
 type OfferListScreenProps = {
-  offersNumber: number;
   offers: Offer[];
 }
 
 function OffersListScreen (props: OfferListScreenProps):JSX.Element {
-  const {offersNumber, offers} = props;
-  const offersList = [];
+  const { offers } = props;
   const activeOffer = useState({} as Offer);
-
-  for (let i = 0; i < offersNumber; i++) {
-    offersList.push(
-      <CardScreen
-        key={i.toString()}
-        offer={offers[i]}
-        setActiveOffer={
-          (currentOffer) => {
-            activeOffer[1](currentOffer);
-          }
-        }
-      />
-    );
-  }
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offersList}
+      {
+        offers &&
+          offers.map((offer) => (
+            <CardScreen
+              key={offer.id}
+              offer={offer}
+              setActiveOffer={
+                (currentOffer) => {
+                  activeOffer[1](currentOffer);
+                }
+              }
+            />
+          ))
+      }
     </div>
   );
 }

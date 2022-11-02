@@ -23,9 +23,7 @@ function CardScreen(props: CardScreenProps): JSX.Element {
           </div>
         }
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
-            <img className="place-card__image" src={offer.images[1]} width="260" height="200" alt="Place" />
-          </a>
+          <img className="place-card__image" src={offer.images[1]} width="260" height="200" alt="Place" />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
@@ -42,7 +40,7 @@ function CardScreen(props: CardScreenProps): JSX.Element {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{offer.title}</a>
+            {offer.title}
           </h2>
           <p className="place-card__type">{offer.type}</p>
         </div>

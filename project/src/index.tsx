@@ -4,7 +4,7 @@ import App from './components/app/app';
 
 
 const Settings = {
-  offersNumber: 6,
+  offersNumber: 5,
 } as const;
 
 const root = ReactDOM.createRoot(
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <App
-      offersNumber={Settings.offersNumber}
-    />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <App
+    offersNumber={Settings.offersNumber}
+  />
+  // </React.StrictMode>,
 );

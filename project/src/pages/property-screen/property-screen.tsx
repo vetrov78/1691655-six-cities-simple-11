@@ -11,9 +11,6 @@ function PropertyScreen (props: { offers: Offers }): JSX.Element {
   const {offers} = props;
   const currentOffer = offers.find((offer) => offer.id === Number(id));
 
-  // eslint-disable-next-line no-console
-  console.log(currentOffer);
-
   return (
     <div className="page">
       <main className="page__main page__main--property">
@@ -112,7 +109,9 @@ function PropertyScreen (props: { offers: Offers }): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
