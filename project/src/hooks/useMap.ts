@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import { MutableRefObject, useEffect, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { Point } from '../types/point-type';
+import { Location } from '../types/offer-type';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: Point
+  city: Location
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 

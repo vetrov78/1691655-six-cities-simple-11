@@ -3,18 +3,19 @@ import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
 
 type CardScreenProps = {
+  className: string;
   offer: Offer;
-  setActiveOffer: (offer: Offer) => void;
+  setActiveOffer: (offer: Offer | undefined) => void;
  }
 function CardScreen(props: CardScreenProps): JSX.Element {
-  const {offer, setActiveOffer} = props;
+  const {className, offer, setActiveOffer} = props;
 
   return (
-    <Link to={`offer/${offer.id}`}>
+    <Link to={`/offer/${offer.id}`}>
       <article
         onMouseOver={ () => setActiveOffer(offer) }
-        onMouseLeave={ () => setActiveOffer({} as Offer) }
-        className="cities__card place-card"
+        onMouseLeave={ () => setActiveOffer(undefined) }
+        className={`${className} place-card`}
       >
         {
           offer.isPremium &&
