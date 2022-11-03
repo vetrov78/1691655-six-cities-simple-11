@@ -1,17 +1,14 @@
-/* eslint-disable no-console */
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { Point } from '../types/point-type';
+import { Location } from '../types/offer-type';
 
-function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  city: Point
-): Map | null {
+function useMap( mapRef: MutableRefObject<HTMLElement | null>, city: Location): Map | null {
   const [map, setMap] = useState<Map | null>(null);
+  const isRenderedRef = useRef(false);
 
   useEffect(
     () => {
-      if (mapRef.current !== null && map === null) {
+      if (mapRef.current !== null && !isRenderedRef.current) {
 
         const instance = new Map(mapRef.current, {
           center: {
@@ -29,6 +26,8 @@ function useMap(
 
         instance.addLayer(layer);
         setMap(instance);
+
+        isRenderedRef.current = true;
       }
     }, [mapRef, map, city]);
 

@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  // <React.StrictMode>
-  <App
-    offersNumber={Settings.offersNumber}
-  />
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <App
+      offersNumber={Settings.offersNumber}
+    />
+  </React.StrictMode>,
 );
