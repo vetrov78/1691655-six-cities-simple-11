@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer-type';
-import CardScreen from '../card-screen/card-screen';
+import CardScreen from '../../pages/card-screen/card-screen';
 
 type OfferListScreenProps = {
   className: string;

@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-
+import {store} from './store';
 
 const Settings = {
   offersNumber: 5,
@@ -13,8 +14,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   // <React.StrictMode>
-  <App
-    offersNumber={Settings.offersNumber}
-  />
+  <Provider store={store}>
+    <App
+      offersNumber={Settings.offersNumber}
+    />
+  </Provider>
   // </React.StrictMode>,
 );

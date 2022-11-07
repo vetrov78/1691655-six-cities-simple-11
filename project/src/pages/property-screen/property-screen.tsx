@@ -5,7 +5,7 @@ import ReviewsListScreen from '../../components/reviews-list/reviews-list-screen
 import { reviews } from '../../mocks/reviews';
 import { Offer, Offers } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
-import OffersListScreen from '../offers-list-screen/offers-list-screen';
+import OffersListScreen from '../../components/offers-list/offers-list-screen';
 
 
 function PropertyScreen (props: { offers: Offers }): JSX.Element {
