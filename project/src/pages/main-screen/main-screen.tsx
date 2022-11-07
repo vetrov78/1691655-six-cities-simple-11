@@ -5,10 +5,6 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { TabListComponent } from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 
-// type MainScreenProps = {
-//   offers: Offer[];
-// }
-
 function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
   const currentOffers = useAppSelector((state) => state.offers);
