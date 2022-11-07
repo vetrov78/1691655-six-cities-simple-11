@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
-import OffersListScreen from '../offers-list-screen/offers-list-screen';
+import OffersListScreen from '../../components/offers-list/offers-list-screen';
 
 type MainScreenProps = {
   offers: Offer[];
@@ -17,6 +17,7 @@ function MainScreen (props: MainScreenProps): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
+
             <li className="locations__item">
               <a className="locations__item-link tabs__item" href="#">
                 <span>Paris</span>
