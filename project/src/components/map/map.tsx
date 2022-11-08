@@ -1,4 +1,4 @@
-import { Icon, Marker } from 'leaflet';
+import { Icon, LayerGroup, Marker } from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../consts';
 import useMap from '../../hooks/useMap';
@@ -30,6 +30,8 @@ function Map (props: MapProps):JSX.Element {
 
   useEffect(() => {
     if (map) {
+      const markersLayer = new LayerGroup();
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -43,8 +45,10 @@ function Map (props: MapProps):JSX.Element {
               currentCustomIcon :
               defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(markersLayer);
       });
+
+      map.addLayer(markersLayer);
     }
   }, [map, offers, selectedPoint]);
 
