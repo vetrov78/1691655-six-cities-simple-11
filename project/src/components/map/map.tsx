@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Icon, Marker } from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../consts';
