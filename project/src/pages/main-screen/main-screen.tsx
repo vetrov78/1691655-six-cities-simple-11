@@ -1,16 +1,13 @@
-import CardScreen from '../card-screen/card-screen';
+import { Offer } from '../../types/offer-type';
+import OffersListScreen from '../offers-list-screen/offers-list-screen';
 
 type MainScreenProps = {
   offersNumber: number;
+  offers: Offer[];
 }
 
 function MainScreen (props: MainScreenProps): JSX.Element {
-  const {offersNumber} = props;
-  const offersList = [];
-
-  for (let i = 0; i < offersNumber; i++) {
-    offersList.push(<CardScreen key={i.toString()} offerNumber={i + 1} />);
-  }
+  const {offersNumber, offers} = props;
 
   return (
     <main className="page__main page__main--index">
@@ -64,18 +61,16 @@ function MainScreen (props: MainScreenProps): JSX.Element {
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
               </span>
-              <ul className="places__options places__options--custom places__options--opened">
+              <ul className="places__options places__options--custom places__options--closed">
                 <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                 <li className="places__option" tabIndex={0}>Price: low to high</li>
                 <li className="places__option" tabIndex={0}>Price: high to low</li>
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
 
-              {offersList}
+            <OffersListScreen offersNumber={offersNumber} offers={offers}/>
 
-            </div>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
