@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { offers } from '../../mocks/offers';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -19,11 +19,11 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<LayoutScreen isLoginPage={isLoginPage}/>}
+          element={<LayoutScreen isLoginPage={isLoginPage }/>}
         >
           <Route
             index
-            element={<MainScreen offersNumber={offersNumber} offers={offers}/>}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
@@ -31,7 +31,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen offers={offers}/>}
+            element={<PropertyScreen />}
           />
           <Route
             path='*'
