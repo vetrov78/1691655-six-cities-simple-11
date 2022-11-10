@@ -13,9 +13,13 @@ function SortingTab ({sortingType}: props): JSX.Element {
     <li
       className={`places__option ${activeSortingType === sortingType ? 'places__option--active' : ''}`}
       tabIndex={0}
-      onClick={(evt) => dispatch(changeSortType({type: (evt.target as HTMLElement).innerText}))}
+      onClick={
+        (evt) => {
+          dispatch(changeSortType({type: (evt.target as HTMLElement).innerText}));
+        }
+      }
     >
-      {sortingType}
+      { sortingType }
     </li>
   );
 }
