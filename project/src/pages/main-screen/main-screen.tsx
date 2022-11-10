@@ -4,10 +4,7 @@ import { Offer } from '../../types/offer-type';
 import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { TabListComponent } from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
-<<<<<<< HEAD
-=======
 import SortingList from '../../components/sorting-list/sorting-list';
->>>>>>> d9ba4e0 (Изменяет состояние типа сортировки и активный таб в списке)
 
 function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
