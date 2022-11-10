@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <App
-      offersNumber={Settings.offersNumber}
-    />
-  </Provider>
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <App
+        offersNumber={Settings.offersNumber}
+      />
+    </Provider>
+  </React.StrictMode>,
 );
