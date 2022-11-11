@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';

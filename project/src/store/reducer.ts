@@ -29,7 +29,7 @@ const sortByRating = (offer1: Offer, offer2: Offer) => {
   const {rating: ratingTwo} = offer2;
 
   return (ratingOne < ratingTwo) ? 1 : -1;
-}
+};
 
 const sortedOffers = (currentOffers: Offer[], currentCity: string, currentSortedType: string, sortingType: string): Offers => {
   if (sortingType === currentSortedType) {
