@@ -3,13 +3,15 @@ import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
 import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { TabListComponent } from '../../components/tabs-list/tabs-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
+import { openCloseSorting } from '../../store/actions';
 
 function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
-  const [isSortingOpen, setSortingOpen] = useState<boolean>(false);
+
   const currentOffers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
 
   return (
     <main className="page__main page__main--index">
@@ -29,19 +31,28 @@ function MainScreen (): JSX.Element {
               <span
                 className="places__sorting-type"
                 tabIndex={0}
-                onClick={() => setSortingOpen(!isSortingOpen)}
+                onClick={
+                  () => dispatch(openCloseSorting())
+                }
               >
-                Popular
+                {
+                  useAppSelector((state) => state.sortType)
+                }
                 <svg className="places__sorting-arrow" width="7" height="4">
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
               </span>
 
-              <SortingList isSortingOpen={isSortingOpen} />
+              <SortingList
+                isSortingOpen={useAppSelector((state) => state.isSortingOpen)}
+              />
 
             </form>
 
-            <OffersListScreen className='cities__places-list tabs__content' offers={currentOffers} setActiveOffer={setActiveOffer} />
+            <OffersListScreen
+              className='cities__places-list tabs__content'
+              offers={currentOffers} setActiveOffer={setActiveOffer}
+            />
 
           </section>
           <div className="cities__right-section">
