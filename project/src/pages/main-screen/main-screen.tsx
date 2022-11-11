@@ -11,6 +11,10 @@ function MainScreen (): JSX.Element {
   const [isSortingOpen, setSortingOpen] = useState<boolean>(false);
   const currentOffers = useAppSelector((state) => state.offers);
 
+  //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
+  const root = document.getElementById('root') as HTMLElement;
+  root.style.cssText = 'display: flex; flex-direction: column; overflow-y: hidden';
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
