@@ -1,17 +1,22 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
+import { useAppSelector } from '../../hooks';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PropertyScreen from '../../pages/property-screen/property-screen';
 
-type AppScreenProps = {
-  offersNumber: number;
-}
 
-function App({offersNumber}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isLoginPage = false;
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (isOffersDataLoading) {
+    return (
+      <LoginScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
