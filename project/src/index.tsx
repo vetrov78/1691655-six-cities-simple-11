@@ -4,7 +4,7 @@ import App from './components/app/app';
 
 
 const Settings = {
-  offersNumber: 6,
+  offersNumber: 5,
 } as const;
 
 const root = ReactDOM.createRoot(

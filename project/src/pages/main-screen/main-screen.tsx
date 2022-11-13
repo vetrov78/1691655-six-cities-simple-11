@@ -1,13 +1,15 @@
+import { useState } from 'react';
+import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
 import OffersListScreen from '../offers-list-screen/offers-list-screen';
 
 type MainScreenProps = {
-  offersNumber: number;
   offers: Offer[];
 }
 
 function MainScreen (props: MainScreenProps): JSX.Element {
-  const {offersNumber, offers} = props;
+  const { offers } = props;
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
   return (
     <main className="page__main page__main--index">
@@ -69,11 +71,15 @@ function MainScreen (props: MainScreenProps): JSX.Element {
               </ul>
             </form>
 
-            <OffersListScreen offersNumber={offersNumber} offers={offers}/>
+            <OffersListScreen className='cities__places-list tabs__content' offers={offers} setActiveOffer={setActiveOffer} />
 
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map">
+              {
+                <Map offers={offers} city={offers[0].city.location} selectedPoint={activeOffer}></Map>
+              }
+            </section>
           </div>
         </div>
       </div>

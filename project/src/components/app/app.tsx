@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { offers } from '../../mocks/offers';
@@ -13,6 +14,9 @@ type AppScreenProps = {
 
 function App({offersNumber}: AppScreenProps): JSX.Element {
   const isLoginPage = false;
+  const showedOffers = offers
+    .filter((offer) => offer.city.name === 'Amsterdam')
+    .slice(0, offersNumber);
 
   return (
     <BrowserRouter>
@@ -23,7 +27,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
         >
           <Route
             index
-            element={<MainScreen offersNumber={offersNumber} offers={offers}/>}
+            element={<MainScreen offers={showedOffers}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -31,7 +35,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen offers={offers}/>}
+            element={<PropertyScreen offers={showedOffers}/>}
           />
           <Route
             path='*'

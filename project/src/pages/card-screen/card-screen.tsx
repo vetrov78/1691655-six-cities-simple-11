@@ -3,18 +3,19 @@ import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
 
 type CardScreenProps = {
+  className: string;
   offer: Offer;
-  setActiveOffer: (offer: Offer) => void;
+  setActiveOffer: (offer: Offer | undefined) => void;
  }
 function CardScreen(props: CardScreenProps): JSX.Element {
-  const {offer, setActiveOffer} = props;
+  const {className, offer, setActiveOffer} = props;
 
   return (
-    <Link to={`offer/${offer.id}`}>
+    <Link to={`/offer/${offer.id}`}>
       <article
         onMouseOver={ () => setActiveOffer(offer) }
-        onMouseLeave={ () => setActiveOffer({} as Offer) }
-        className="cities__card place-card"
+        onMouseLeave={ () => setActiveOffer(undefined) }
+        className={`${className} place-card`}
       >
         {
           offer.isPremium &&
@@ -23,9 +24,7 @@ function CardScreen(props: CardScreenProps): JSX.Element {
           </div>
         }
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
-            <img className="place-card__image" src={offer.images[1]} width="260" height="200" alt="Place" />
-          </a>
+          <img className="place-card__image" src={offer.images[1]} width="260" height="200" alt="Place" />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
@@ -42,7 +41,7 @@ function CardScreen(props: CardScreenProps): JSX.Element {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{offer.title}</a>
+            {offer.title}
           </h2>
           <p className="place-card__type">{offer.type}</p>
         </div>
