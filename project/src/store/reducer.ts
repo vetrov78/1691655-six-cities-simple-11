@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { offers } from '../mocks/offers';
+import { Offers } from '../types/offer-type';
 import { changeCity, changeSortType, loadOffers, setOffersLoadingStatus } from './actions';
 
 const initialState = {
   city: 'Paris',
-  offers: offers,
+  offers: [] as Offers,
+  isSortingOpen: false,
   sortType: 'Popular',
   isOffersLoading: false,
 };
@@ -22,11 +23,11 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload.filter((offer) => offer.city.name === state.city);
 
       // eslint-disable-next-line no-console
-      console.log(state.offers);
+      console.log(`reducer: state offers lenght is ${state.offers.length}`);
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       // eslint-disable-next-line no-console
-      console.log(`loading status is ${action.payload.toString()}`);
+      console.log(`reducer: loading status is ${action.payload.toString()}`);
 
       state.isOffersLoading = action.payload;
     });

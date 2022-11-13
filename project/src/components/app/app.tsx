@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { useAppSelector } from '../../hooks';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
@@ -14,7 +15,7 @@ function App(): JSX.Element {
 
   if (isOffersDataLoading) {
     return (
-      <LoginScreen />
+      <LoadingScreen />
     );
   }
 
