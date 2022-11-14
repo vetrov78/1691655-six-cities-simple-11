@@ -3,17 +3,18 @@ import Map from '../../components/map/map';
 import ReviewFormScreen from '../../components/review-form/review-form-screen';
 import ReviewsListScreen from '../../components/reviews-list/reviews-list-screen';
 import { reviews } from '../../mocks/reviews';
-import { Offer, Offers } from '../../types/offer-type';
+import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
-import OffersListScreen from '../offers-list-screen/offers-list-screen';
+import OffersListScreen from '../../components/offers-list/offers-list-screen';
+import { store } from '../../store';
+import { useAppSelector } from '../../hooks';
 
 
-function PropertyScreen (props: { offers: Offers }): JSX.Element {
+function PropertyScreen (): JSX.Element {
   const {id} = useParams();
-  const {offers} = props;
 
-  const currentOffer: Offer | undefined = offers.find((offer) => offer.id === Number(id));
-  const nearOffers: Offer[] = offers.filter((offer) => offer.id !== currentOffer?.id).slice(0, 3);
+  const currentOffer: Offer | undefined = store.getState().offers.find((offer) => offer.id === Number(id));
+  const nearOffers: Offer[] = useAppSelector( (state) => state.offers ).filter((offer) => offer.id !== currentOffer?.id).slice(0, 3);
 
   if (currentOffer) {
     return (

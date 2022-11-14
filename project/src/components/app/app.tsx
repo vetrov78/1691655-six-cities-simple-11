@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { offers } from '../../mocks/offers';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -14,9 +13,6 @@ type AppScreenProps = {
 
 function App({offersNumber}: AppScreenProps): JSX.Element {
   const isLoginPage = false;
-  const showedOffers = offers
-    .filter((offer) => offer.city.name === 'Amsterdam')
-    .slice(0, offersNumber);
 
   return (
     <BrowserRouter>
@@ -27,7 +23,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
         >
           <Route
             index
-            element={<MainScreen offers={showedOffers}/>}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
@@ -35,7 +31,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen offers={showedOffers}/>}
+            element={<PropertyScreen />}
           />
           <Route
             path='*'
