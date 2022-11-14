@@ -17,7 +17,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Location): M
             layer.remove();
           }
         });
-        map.setView( [city.latitude, city.longitude] );
+        map.setView([city.latitude, city.longitude], map.getZoom(), {
+          'animate': true,
+          'duration': 1,
+        });
       }
 
       if (mapRef.current !== null && !isRefRendered.current)

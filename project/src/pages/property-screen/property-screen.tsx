@@ -15,7 +15,10 @@ function PropertyScreen (): JSX.Element {
   const {id} = useParams();
 
   const currentOffer: Offer | undefined = store.getState().offers.find((offer) => offer.id === Number(id));
-  const nearOffers: Offer[] = useAppSelector( (state) => state.offers ).filter((offer) => offer.id !== currentOffer?.id).slice(0, 3);
+  const nearOffers: Offer[] = useAppSelector((state) =>
+    state.offers
+      .filter((offer) => offer.city.name === state.city && offer.id !== currentOffer?.id))
+    .slice(0, 3);
 
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = '';

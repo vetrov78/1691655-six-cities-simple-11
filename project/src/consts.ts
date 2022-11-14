@@ -4,6 +4,13 @@ export enum AppRoute {
   Root = '/',
 }
 
+export enum SortingType {
+  Popular = 'Popular',
+  LowToHighPrice= 'Price: low to high',
+  HighToLowPrice = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const SORT_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
