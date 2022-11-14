@@ -1,10 +1,10 @@
 import { Link, Outlet } from 'react-router-dom';
 
-type layoytProps = {
+type layoutProps = {
   isLoginPage: boolean;
 }
 
-function LayoutScreen ({isLoginPage}: layoytProps):JSX.Element {
+function LayoutScreen ({isLoginPage}: layoutProps):JSX.Element {
   return (
     <>
       {

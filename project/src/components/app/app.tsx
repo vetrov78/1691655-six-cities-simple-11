@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
@@ -19,7 +18,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<LayoutScreen isLoginPage={isLoginPage}/>}
+          element={<LayoutScreen isLoginPage={isLoginPage }/>}
         >
           <Route
             index

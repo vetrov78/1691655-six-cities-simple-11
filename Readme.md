@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов (простой)»
 
 * Студент: [Andrey Vetrov](https://up.htmlacademy.ru/react/11/user/1691655).
-* Наставник: [Артем Мошкин](https://htmlacademy.ru/profile/id2088751).
+* Наставник: [Юрий Лаврухин](https://htmlacademy.ru/profile/id2038891).
 
 ---
 
