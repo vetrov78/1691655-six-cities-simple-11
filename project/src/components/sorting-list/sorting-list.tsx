@@ -3,9 +3,10 @@ import SortingTab from './sorting-tab';
 
 type propsType = {
   isSortingOpen: boolean;
+  setSortingOpenStatus: (value: boolean) => void;
 }
 
-function SortingList ({isSortingOpen}: propsType): JSX.Element {
+function SortingList ({isSortingOpen, setSortingOpenStatus}: propsType): JSX.Element {
 
   return (
     <ul className={`places__options places__options--custom places__options--${isSortingOpen ? 'opened' : 'cloded'}`}>
@@ -14,6 +15,7 @@ function SortingList ({isSortingOpen}: propsType): JSX.Element {
           <SortingTab
             key={type}
             sortingType={type}
+            handleCloseOpen={setSortingOpenStatus}
           />
         ))
       }

@@ -3,19 +3,21 @@ import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
 import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { TabListComponent } from '../../components/tabs-list/tabs-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
-import { openCloseSorting } from '../../store/actions';
 
 function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
 
   const currentOffers = useAppSelector((state) => state.offers);
-  const dispatch = useAppDispatch();
 
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = 'display: flex; flex-direction: column; overflow-y: hidden';
+
+  const offersNumber = useAppSelector((state) => state.offers.length);
+  const currentCity = useAppSelector((state) => state.city);
 
   return (
     <main className="page__main page__main--index">
@@ -29,14 +31,14 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{useAppSelector((state) => state.offers.length)} places to stay in { useAppSelector((state) => state.city) }</b>
+            <b className="places__found">{ offersNumber } places to stay in { currentCity }</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span
                 className="places__sorting-type"
                 tabIndex={0}
                 onClick={
-                  () => dispatch(openCloseSorting())
+                  () => { setSortingOpenStatus( !isSortingOpen ); }
                 }
               >
                 {
@@ -48,7 +50,8 @@ function MainScreen (): JSX.Element {
               </span>
 
               <SortingList
-                isSortingOpen={useAppSelector((state) => state.isSortingOpen)}
+                isSortingOpen={isSortingOpen}
+                setSortingOpenStatus={setSortingOpenStatus}
               />
 
             </form>
