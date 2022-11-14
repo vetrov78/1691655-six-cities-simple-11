@@ -15,6 +15,9 @@ function MainScreen (): JSX.Element {
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = 'display: flex; flex-direction: column; overflow-y: hidden';
 
+  const offersNumber = useAppSelector((state) => state.offers.length);
+  const currentCity = useAppSelector((state) => state.city);
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -27,13 +30,15 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{useAppSelector((state) => state.offers.length)} places to stay in { useAppSelector((state) => state.city) }</b>
+            <b className="places__found">{ offersNumber } places to stay in { currentCity }</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span
                 className="places__sorting-type"
                 tabIndex={0}
-                onClick={() => setSortingOpen(!isSortingOpen)}
+                onClick={
+                  () => { setSortingOpenStatus( !isSortingOpen ); }
+                }
               >
                 Popular
                 <svg className="places__sorting-arrow" width="7" height="4">

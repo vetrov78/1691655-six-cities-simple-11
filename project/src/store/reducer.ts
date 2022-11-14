@@ -1,12 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { offers } from '../mocks/offers';
 import { Offer, Offers } from '../types/offer-type';
-import { changeCity, changeSortType, openCloseSorting } from './actions';
+import { changeCity, changeSortType } from './actions';
 
 const initialState = {
   city: 'Paris',
   offers: offers.filter((offer) => offer.city.name === 'Paris'),
-  isSortingOpen: false,
   sortType: 'Popular',
 };
 
@@ -51,16 +50,12 @@ const sortedOffers = (currentOffers: Offer[], currentCity: string, currentSorted
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(openCloseSorting, (state) => {
-      state.isSortingOpen = !state.isSortingOpen;
-    })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload.city;
       state.offers = offers.filter((offer) => offer.city.name === action.payload.city);
       state.sortType = 'Popular';
     })
     .addCase(changeSortType, (state, action) => {
-      state.isSortingOpen = false;
       state.offers = sortedOffers(state.offers, state.city, state.sortType, action.payload.type);
       state.sortType = action.payload.type;
     });
