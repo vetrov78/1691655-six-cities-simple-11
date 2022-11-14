@@ -18,7 +18,7 @@ function App({offersNumber}: AppScreenProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<LayoutScreen isLoginPage={isLoginPage}/>}
+          element={<LayoutScreen isLoginPage={isLoginPage }/>}
         >
           <Route
             index

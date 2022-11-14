@@ -52,7 +52,7 @@ function Map (props: MapProps):JSX.Element {
   }, [map, offers, selectedPoint]);
 
   return (
-    <div style={{height: '500px'}} ref={mapRef}></div>
+    <div style={{height: '100%'}} ref={mapRef}></div>
   );
 }
 

@@ -5,18 +5,30 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { TabListComponent } from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
+import { getSortingFunc } from '../../utils';
+import { SortingType } from '../../consts';
 
 function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
-  const [isSortingOpen, setSortingOpen] = useState<boolean>(false);
-  const currentOffers = useAppSelector((state) => state.offers);
+  const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
+
+  const currentCity = useAppSelector((state) => state.city);
+  const currentOffers = useAppSelector( (state) => {
+    let result = state.offers.filter((offer) => offer.city.name === state.city);
+
+    if (state.sortType === SortingType.Popular) { return result; }
+    else {
+      result = result.sort(getSortingFunc(state.sortType));
+    }
+
+    return result;
+  });
+
+  const offersNumber = currentOffers.length;
 
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = 'display: flex; flex-direction: column; overflow-y: hidden';
-
-  const offersNumber = useAppSelector((state) => state.offers.length);
-  const currentCity = useAppSelector((state) => state.city);
 
   return (
     <main className="page__main page__main--index">
@@ -32,7 +44,7 @@ function MainScreen (): JSX.Element {
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{ offersNumber } places to stay in { currentCity }</b>
             <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
+              <span className="places__sorting-caption">Sort by &nbsp;</span>
               <span
                 className="places__sorting-type"
                 tabIndex={0}
@@ -40,17 +52,25 @@ function MainScreen (): JSX.Element {
                   () => { setSortingOpenStatus( !isSortingOpen ); }
                 }
               >
-                Popular
+                {
+                  useAppSelector((state) => state.sortType)
+                }
                 <svg className="places__sorting-arrow" width="7" height="4">
                   <use xlinkHref="#icon-arrow-select"></use>
                 </svg>
               </span>
 
-              <SortingList isSortingOpen={isSortingOpen} />
+              <SortingList
+                isSortingOpen={isSortingOpen}
+                setSortingOpenStatus={setSortingOpenStatus}
+              />
 
             </form>
 
-            <OffersListScreen className='cities__places-list tabs__content' offers={currentOffers} setActiveOffer={setActiveOffer} />
+            <OffersListScreen
+              className='cities__places-list tabs__content'
+              offers={currentOffers} setActiveOffer={setActiveOffer}
+            />
 
           </section>
           <div className="cities__right-section">
