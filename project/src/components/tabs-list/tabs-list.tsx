@@ -17,7 +17,7 @@ export function TabListComponent(): JSX.Element {
               to="#"
               onClick={
                 (evt) => {
-                  dispatch(changeCity({ city: (evt.target as HTMLElement).innerText }))
+                  dispatch(changeCity({ city: (evt.target as HTMLElement).innerText }));
                 }
               }
             >
