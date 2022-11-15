@@ -16,7 +16,9 @@ export function TabListComponent(): JSX.Element {
               className={`locations__item-link tabs__item ${ city === store.getState().city ? 'tabs__item--active' : '' }`}
               to="#"
               onClick={
-                (evt) => dispatch(changeCity({ city: (evt.target as HTMLElement).innerText }))
+                (evt) => {
+                  dispatch(changeCity({ city: (evt.target as HTMLElement).innerText }))
+                }
               }
             >
               <span>{city}</span>

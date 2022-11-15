@@ -12,7 +12,7 @@ function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
   const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
 
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector( (state) => state.city );
   const currentOffers = useAppSelector( (state) => {
     let result = state.offers.filter((offer) => offer.city.name === state.city);
 
@@ -23,6 +23,7 @@ function MainScreen (): JSX.Element {
 
     return result;
   });
+
 
   const offersNumber = currentOffers.length;
 

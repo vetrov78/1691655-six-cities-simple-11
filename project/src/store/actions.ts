@@ -10,3 +10,6 @@ export const changeSortType = createAction<{type: string}>('offers/sortByType');
 export const loadOffers = createAction<Offers>('data/loadOffers');
 
 export const setOffersLoadingStatus = createAction<boolean>('data/setOffersLoadingStatus');
+
+export const changeAuthorizationStatus = createAction<boolean>('interface/authorizationStatus');
+
