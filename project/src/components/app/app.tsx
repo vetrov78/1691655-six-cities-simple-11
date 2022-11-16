@@ -10,7 +10,6 @@ import PropertyScreen from '../../pages/property-screen/property-screen';
 
 
 function App(): JSX.Element {
-  const isLoginPage = false;
   const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
 
   if (isOffersDataLoading) {
@@ -23,16 +22,16 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
+          path={AppRoute.Login}
+          element={<LoginScreen />}
+        />
+        <Route
           path={AppRoute.Root}
-          element={<LayoutScreen isLoginPage={isLoginPage }/>}
+          element={<LayoutScreen />}
         >
           <Route
             index
             element={<MainScreen />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginScreen />}
           />
           <Route
             path={AppRoute.Offer}
