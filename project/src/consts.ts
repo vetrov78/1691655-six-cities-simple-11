@@ -11,6 +11,18 @@ export enum SortingType {
   TopRatedFirst = 'Top rated first',
 }
 
+export enum ApiRoutes {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const SORT_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
