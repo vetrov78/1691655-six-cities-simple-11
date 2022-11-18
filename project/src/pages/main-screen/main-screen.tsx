@@ -13,17 +13,11 @@ function MainScreen (): JSX.Element {
   const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
 
   const currentCity = useAppSelector( (state) => state.city );
-  const currentOffers = useAppSelector( (state) => {
-    let result = state.offers.filter((offer) => offer.city.name === state.city);
-
-    if (state.sortType === SortingType.Popular) { return result; }
-    else {
-      result = result.sort(getSortingFunc(state.sortType));
-    }
-
-    return result;
-  });
-
+  const currentOffers = useAppSelector( (state) =>
+    state.sortType === SortingType.Popular
+      ? state.offers.filter((offer) => offer.city.name === state.city)
+      : state.offers.filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
+  );
 
   const offersNumber = currentOffers.length;
 
