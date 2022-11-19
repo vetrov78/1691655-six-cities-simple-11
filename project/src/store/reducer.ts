@@ -36,6 +36,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadAllOffers, (state, action) => {
       state.offers = action.payload;
+      // eslint-disable-next-line no-console
+      console.log('reducer: loaded');
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;

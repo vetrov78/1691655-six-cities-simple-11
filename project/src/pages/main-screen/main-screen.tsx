@@ -6,18 +6,24 @@ import { TabListComponent } from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
 import { getSortingFunc } from '../../utils';
-import { SortingType } from '../../consts';
+import { CITIES, SortingType } from '../../consts';
 
 function MainScreen (): JSX.Element {
+  // необходим для изменения цвета маркера на карте при наведении на соответствующее предложение
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
+  // состояние выпадающего списка с вариантами сортировки
   const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
 
-  const currentCity = useAppSelector( (state) => state.city );
+  // копия массива предложений, в данном городе и отсортированная
   const currentOffers = useAppSelector( (state) =>
     state.sortType === SortingType.Popular
       ? state.offers.filter((offer) => offer.city.name === state.city)
       : state.offers.filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
   );
+
+  const currentCityName = useAppSelector((state) => state.city);
+  const currentCity = CITIES.find((city) => city.name === currentCityName);
 
   const offersNumber = currentOffers.length;
 
@@ -37,7 +43,7 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{ offersNumber } places to stay in { currentCity }</b>
+            <b className="places__found">{ offersNumber } places to stay in { currentCityName }</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by &nbsp;</span>
               <span
@@ -71,7 +77,7 @@ function MainScreen (): JSX.Element {
           <div className="cities__right-section">
             <section className="cities__map map">
 
-              <Map offers={currentOffers} city={currentOffers[0].city.location} selectedPoint={activeOffer}></Map>
+              <Map offers={currentOffers} city={currentCity!.location} selectedPoint={activeOffer}></Map>
 
             </section>
           </div>
