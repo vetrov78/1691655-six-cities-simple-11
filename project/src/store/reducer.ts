@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../consts';
-import { Offer, Offers } from '../types/offer-type';
+import { Offer, NormalizedOffers } from '../types/offer-type';
 import { changeAuthorizationStatus, changeCity, changeSortType, loadAllOffers, loadOffer, setError, setOffersLoadingStatus, setUserEmail } from './actions';
 
 type InitialState = {
   city: string;
-  offers: Offers;
+  offers: NormalizedOffers;
   sortType: string;
   isOffersLoading: boolean;
   authorizationStatus: AuthorizationStatus;
@@ -16,7 +16,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   city: 'Paris',
-  offers: [] as Offers,
+  offers: {},
   sortType: 'Popular',
   isOffersLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -35,9 +35,16 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortType = action.payload.type;
     })
     .addCase(loadAllOffers, (state, action) => {
-      state.offers = action.payload;
-      // eslint-disable-next-line no-console
-      console.log('reducer: loaded');
+      state.offers = action.payload.reduce((result, element) => (
+        {
+          ...result,
+          [element.id]: element
+        }), {});
+      // const filteredOffers = Object.values(normalizedOffers)
+      //   .filter((value: Offer) => value.city.name === 'Paris');
+
+      // // eslint-disable-next-line no-console
+      // console.log(filteredOffers);
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;

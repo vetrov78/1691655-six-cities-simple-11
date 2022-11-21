@@ -34,4 +34,4 @@ export type Offer = {
   'id': number;
 }
 
-export type Offers = Offer[]
+export type NormalizedOffers = {[id: string]: Offer}

@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../consts';
-import { Offer, Offers } from '../types/offer-type';
+import { Offer } from '../types/offer-type';
 
 export const openCloseSorting = createAction('interface/openCloseSorting');
 
@@ -8,7 +8,7 @@ export const changeCity = createAction<{city: string}>('offers/changeCity');
 
 export const changeSortType = createAction<{type: string}>('offers/sortByType');
 
-export const loadAllOffers = createAction<Offers>('data/loadAllOffers');
+export const loadAllOffers = createAction<Offer[]>('data/loadAllOffers');
 
 export const setOffersLoadingStatus = createAction<boolean>('data/setOffersLoadingStatus');
 

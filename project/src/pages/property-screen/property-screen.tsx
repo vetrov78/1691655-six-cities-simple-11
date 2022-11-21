@@ -14,9 +14,9 @@ import { useEffect } from 'react';
 function PropertyScreen (): JSX.Element {
   const {id} = useParams();
 
-  const currentOffer: Offer | undefined = store.getState().offers.find((offer) => offer.id === Number(id));
+  const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === Number(id));
   const nearOffers: Offer[] = useAppSelector((state) =>
-    state.offers
+    Object.values(state.offers)
       .filter((offer) => offer.city.name === state.city && offer.id !== currentOffer?.id))
     .slice(0, 3);
 
