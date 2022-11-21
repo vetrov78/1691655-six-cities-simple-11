@@ -1,10 +1,10 @@
 export type Location = {
   latitude: number;
   longitude: number;
-  zoom: number;
+  zoom?: number;
 }
 
-type CityType = {
+export type CityType = {
   location: Location;
   name: string;
 }
@@ -34,4 +34,4 @@ export type Offer = {
   'id': number;
 }
 
-export type Offers = Offer[]
+export type NormalizedOffers = {[id: string]: Offer}

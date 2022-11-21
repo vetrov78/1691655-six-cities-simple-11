@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AppRoute, AuthorizationStatus } from '../../consts';
 import { useAppSelector } from '../../hooks';
 import LayoutScreen from '../../pages/layout-sreen/layout-screen';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
@@ -10,10 +10,10 @@ import PropertyScreen from '../../pages/property-screen/property-screen';
 
 
 function App(): JSX.Element {
-  const isLoginPage = false;
+  const authotizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
 
-  if (isOffersDataLoading) {
+  if (isOffersDataLoading && authotizationStatus === AuthorizationStatus.Unknown) {
     return (
       <LoadingScreen />
     );
@@ -23,16 +23,16 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
+          path={AppRoute.Login}
+          element={<LoginScreen />}
+        />
+        <Route
           path={AppRoute.Root}
-          element={<LayoutScreen isLoginPage={isLoginPage }/>}
+          element={<LayoutScreen />}
         >
           <Route
             index
             element={<MainScreen />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginScreen />}
           />
           <Route
             path={AppRoute.Offer}

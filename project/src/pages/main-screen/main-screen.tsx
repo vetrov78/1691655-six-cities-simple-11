@@ -6,29 +6,41 @@ import { TabListComponent } from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
 import { getSortingFunc } from '../../utils';
-import { SortingType } from '../../consts';
+import { CITIES, SortingType } from '../../consts';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function MainScreen (): JSX.Element {
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
-  const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
-
-  const currentCity = useAppSelector((state) => state.city);
-  const currentOffers = useAppSelector( (state) => {
-    let result = state.offers.filter((offer) => offer.city.name === state.city);
-
-    if (state.sortType === SortingType.Popular) { return result; }
-    else {
-      result = result.sort(getSortingFunc(state.sortType));
-    }
-
-    return result;
-  });
-
-  const offersNumber = currentOffers.length;
-
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = 'display: flex; flex-direction: column; overflow-y: hidden';
+
+  // необходим для изменения цвета маркера на карте при наведении на соответствующее предложение
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
+  // состояние выпадающего списка с вариантами сортировки
+  const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
+
+  // копия массива предложений, в данном городе и отсортированная
+  const currentOffers = useAppSelector((state) =>
+    state.sortType === SortingType.Popular
+      ? Object.values(state.offers).filter((offer) => offer.city.name === state.city)
+      : Object.values(state.offers).filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
+  );
+
+  const sortType = useAppSelector((state) => state.sortType);
+  const currentCityName = useAppSelector((state) => state.city);
+  const offersNumber = currentOffers.length;
+  const currentCity = CITIES.find((city) => city.name === currentCityName);
+
+  if (useAppSelector((state) => state.isOffersLoading))
+  {
+    return <LoadingScreen />;
+  }
+  // Пока не знаю как по другому исключить undefined из результата find..
+  if (!currentCity) {
+    return <NotFoundScreen />;
+  }
 
   return (
     <main className="page__main page__main--index">
@@ -42,7 +54,7 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{ offersNumber } places to stay in { currentCity }</b>
+            <b className="places__found">{ offersNumber } places to stay in { currentCityName }</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by &nbsp;</span>
               <span
@@ -53,7 +65,7 @@ function MainScreen (): JSX.Element {
                 }
               >
                 {
-                  useAppSelector((state) => state.sortType)
+                  sortType
                 }
                 <svg className="places__sorting-arrow" width="7" height="4">
                   <use xlinkHref="#icon-arrow-select"></use>
@@ -76,7 +88,7 @@ function MainScreen (): JSX.Element {
           <div className="cities__right-section">
             <section className="cities__map map">
 
-              <Map offers={currentOffers} city={currentOffers[0].city.location} selectedPoint={activeOffer}></Map>
+              <Map offers={currentOffers} city={{...currentCity.location, zoom: 13}} selectedPoint={activeOffer}></Map>
 
             </section>
           </div>
