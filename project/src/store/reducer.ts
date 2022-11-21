@@ -40,11 +40,6 @@ export const reducer = createReducer(initialState, (builder) => {
           ...result,
           [element.id]: element
         }), {});
-      // const filteredOffers = Object.values(normalizedOffers)
-      //   .filter((value: Offer) => value.city.name === 'Paris');
-
-      // // eslint-disable-next-line no-console
-      // console.log(filteredOffers);
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;

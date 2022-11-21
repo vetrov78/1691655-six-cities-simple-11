@@ -1,7 +1,7 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../consts';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
@@ -11,11 +11,23 @@ function LoginScreen ():JSX.Element {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-    navigate(AppRoute.Root);
   };
+
+  useEffect(() => {
+    let isLogin = true;
+
+    if (isLogin && authStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
+
+    return () => {
+      isLogin = false;
+    };
+  }, [authStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
