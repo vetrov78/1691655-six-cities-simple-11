@@ -2,23 +2,22 @@ import { useParams } from 'react-router';
 import Map from '../../components/map/map';
 import ReviewFormScreen from '../../components/review-form/review-form-screen';
 import ReviewsListScreen from '../../components/reviews-list/reviews-list-screen';
-import { reviews } from '../../mocks/reviews';
 import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
 import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { store } from '../../store';
-import { useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
+import { useAppSelector } from '../../hooks';
+import { Review } from '../../types/review-type';
 
 
 function PropertyScreen (): JSX.Element {
-  const {id} = useParams();
+  const id = Number(useParams().id);
 
-  const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === Number(id));
-  const nearOffers: Offer[] = useAppSelector((state) =>
-    Object.values(state.offers)
-      .filter((offer) => offer.city.name === state.city && offer.id !== currentOffer?.id))
-    .slice(0, 3);
+  const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === id);
+
+  const nearOffers: Offer[] = useAppSelector((state) => state.nearOffers);
+  const reviews: Review[] = useAppSelector((state) => state.reviews);
 
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = '';

@@ -1,8 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../consts';
 import { Offer } from '../types/offer-type';
-
-export const openCloseSorting = createAction('interface/openCloseSorting');
+import { Review } from '../types/review-type';
 
 export const changeCity = createAction<{city: string}>('offers/changeCity');
 
@@ -18,4 +17,6 @@ export const setError = createAction<string | null>('data/setError');
 
 export const setUserEmail = createAction<string | null>('user/setEmail');
 
-export const loadOffer = createAction<Offer>('data/loadOffer');
+export const loadNearOffers = createAction<Offer[]>('data/loadNearOffers');
+
+export const loadReviews = createAction<Review[]>('data/loadReviews');
