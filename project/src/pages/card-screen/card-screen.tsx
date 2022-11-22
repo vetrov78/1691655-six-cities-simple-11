@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
-import { fetchNearOffersAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchNearOffersAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
 
@@ -15,7 +15,6 @@ function CardScreen(props: CardScreenProps): JSX.Element {
 
   const handleClick = () => {
     store.dispatch(fetchNearOffersAction(offer.id));
-    store.dispatch(fetchReviewsAction(offer.id));
   };
 
   return (

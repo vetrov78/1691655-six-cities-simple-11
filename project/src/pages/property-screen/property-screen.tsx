@@ -8,7 +8,8 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { store } from '../../store';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
-import { Review } from '../../types/review-type';
+import { fetchReviewsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../consts';
 
 
 function PropertyScreen (): JSX.Element {
@@ -16,8 +17,8 @@ function PropertyScreen (): JSX.Element {
 
   const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === id);
 
+  const isAuth = useAppSelector((state) => state.authorizationStatus === AuthorizationStatus.Auth);
   const nearOffers: Offer[] = useAppSelector((state) => state.nearOffers);
-  const reviews: Review[] = useAppSelector((state) => state.reviews);
 
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = '';
@@ -25,6 +26,9 @@ function PropertyScreen (): JSX.Element {
   //При изменении текущего объекта страница скролится наверх
   useEffect(() => {
     window.scroll(0, 0);
+    if (currentOffer) {
+      store.dispatch(fetchReviewsAction(currentOffer.id));
+    }
   }, [currentOffer]);
 
   if (currentOffer) {
@@ -118,11 +122,10 @@ function PropertyScreen (): JSX.Element {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-
-                  <ReviewsListScreen reviews={reviews} />
-
-                  <ReviewFormScreen />
-
+                  <ReviewsListScreen />
+                  {
+                    isAuth ? <ReviewFormScreen /> : <div />
+                  }
                 </section>
               </div>
             </div>
@@ -143,7 +146,7 @@ function PropertyScreen (): JSX.Element {
     );
   } else {
     return (
-      <div className="page"></div>
+      <div className="page">404 - Page not found</div>
     );
   }
 }
