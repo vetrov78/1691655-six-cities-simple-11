@@ -17,6 +17,17 @@ function LoginScreen ():JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
+  };
+
   useEffect(() => {
     let isLogin = true;
 
@@ -28,17 +39,6 @@ function LoginScreen ():JSX.Element {
       isLogin = false;
     };
   }, [authStatus]);
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
-    }
-  };
 
   return (
     <div className="page page--gray page--login">

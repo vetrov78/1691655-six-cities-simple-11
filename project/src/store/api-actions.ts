@@ -64,6 +64,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }> (
   'user/checkAuth',
   async (_args, {dispatch, extra: api}) => {
+
     try {
       const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
 
@@ -100,6 +101,24 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(ApiRoutes.Logout);
     dropToken();
     dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+);
+
+export const postReviewAction = createAsyncThunk<void, {
+  hotelId: number;
+  comment: string;
+  rating: number;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}> (
+  'reviews/postReview',
+  async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Review>(`${ApiRoutes.Reviews}/${hotelId}`, {comment, rating});
+
+    // eslint-disable-next-line no-console
+    console.log(data);
   }
 );
 

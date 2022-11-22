@@ -9,6 +9,7 @@ import { store } from '../../store';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Review } from '../../types/review-type';
+import { fetchReviewsAction } from '../../store/api-actions';
 
 
 function PropertyScreen (): JSX.Element {
@@ -25,6 +26,9 @@ function PropertyScreen (): JSX.Element {
   //При изменении текущего объекта страница скролится наверх
   useEffect(() => {
     window.scroll(0, 0);
+    if (currentOffer) {
+      store.dispatch(fetchReviewsAction(currentOffer.id));
+    }
   }, [currentOffer]);
 
   if (currentOffer) {
@@ -121,7 +125,9 @@ function PropertyScreen (): JSX.Element {
 
                   <ReviewsListScreen reviews={reviews} />
 
-                  <ReviewFormScreen />
+                  {
+                    <ReviewFormScreen />
+                  }
 
                 </section>
               </div>
@@ -143,7 +149,7 @@ function PropertyScreen (): JSX.Element {
     );
   } else {
     return (
-      <div className="page"></div>
+      <div className="page">404 - Page not found</div>
     );
   }
 }
