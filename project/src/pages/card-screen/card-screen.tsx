@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { store } from '../../store';
+import { fetchNearOffersAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
 
@@ -7,11 +9,19 @@ type CardScreenProps = {
   offer: Offer;
   setActiveOffer: (offer: Offer | undefined) => void;
  }
+
 function CardScreen(props: CardScreenProps): JSX.Element {
   const {className, offer, setActiveOffer} = props;
 
+  const handleClick = () => {
+    store.dispatch(fetchNearOffersAction(offer.id));
+  };
+
   return (
-    <Link to={`/offer/${offer.id}`}>
+    <Link
+      to={`/offer/${offer.id}`}
+      onClick={ handleClick }
+    >
       <article
         onMouseOver={ () => setActiveOffer(offer) }
         onMouseLeave={ () => setActiveOffer(undefined) }
@@ -24,7 +34,7 @@ function CardScreen(props: CardScreenProps): JSX.Element {
           </div>
         }
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <img className="place-card__image" src={offer.images[1]} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={offer.images[0]} width="260" height="200" alt="Place" />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">

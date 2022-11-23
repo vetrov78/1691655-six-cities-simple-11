@@ -2,13 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer-type';
-import { changeAuthorizationStatus, loadAllOffers, loadOffer, setError, setOffersLoadingStatus, setUserEmail } from './actions';
+import { changeAuthorizationStatus, loadAllOffers, loadNearOffers, loadReviews, setError, setOffersLoadingStatus, setUserEmail } from './actions';
 import { ApiRoutes, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../consts';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { ResponseUserData } from '../types/response-user-data';
 import { store } from '.';
+import { Review } from '../types/review-type';
 
 export const fetchAllOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -26,20 +27,33 @@ export const fetchAllOffersAction = createAsyncThunk<void, undefined, {
   }
 );
 
-export const fetchOfferAction = createAsyncThunk<void, number, {
+export const fetchNearOffersAction = createAsyncThunk<void, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }> (
-  'data/loadOffer',
-  async (id, {dispatch, extra: api}) => {
+  'data/loadNearOffers',
+  async (id: number, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.get<Offer>(`${ApiRoutes.Offers}/${id}`);
+      const {data} = await api.get<Offer[]>(`${ApiRoutes.Offers}/${id}/nearby`);
 
-      dispatch(loadOffer(data));
+      dispatch(loadNearOffers(data));
     } catch {
-      dispatch(loadOffer({} as Offer));
+      dispatch(loadNearOffers([] as Offer[]));
     }
+  }
+);
+
+export const fetchReviewsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}> (
+  'data/loadReviews',
+  async (id:number, {dispatch, extra: api}) => {
+    const {data} = await api.get<Review[]>(`${ApiRoutes.Reviews}/${id}`);
+
+    dispatch(loadReviews(data));
   }
 );
 
@@ -50,6 +64,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }> (
   'user/checkAuth',
   async (_args, {dispatch, extra: api}) => {
+
     try {
       const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
 
@@ -86,6 +101,24 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(ApiRoutes.Logout);
     dropToken();
     dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+);
+
+export const postReviewAction = createAsyncThunk<void, {
+  hotelId: number;
+  comment: string;
+  rating: number;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}> (
+  'reviews/postReview',
+  async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Review>(`${ApiRoutes.Reviews}/${hotelId}`, {comment, rating});
+
+    // eslint-disable-next-line no-console
+    console.log(data);
   }
 );
 
