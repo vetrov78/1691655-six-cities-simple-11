@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { fetchNearOffersAction } from '../../store/api-actions';
@@ -60,4 +61,4 @@ function CardScreen(props: CardScreenProps): JSX.Element {
   );
 }
 
-export default CardScreen;
+export default memo(CardScreen);

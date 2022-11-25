@@ -1,5 +1,6 @@
 import { Offer } from '../../types/offer-type';
 import CardScreen from '../../pages/card-screen/card-screen';
+import { useCallback } from 'react';
 
 type OfferListScreenProps = {
   className: string;
@@ -9,6 +10,7 @@ type OfferListScreenProps = {
 
 function OffersListScreen (props: OfferListScreenProps):JSX.Element {
   const { className, offers, setActiveOffer } = props;
+  const handleClick = useCallback((currentOffer: Offer | undefined) => setActiveOffer(currentOffer), []);
 
   return (
     <div className={`${className} places__list`}>
@@ -21,11 +23,7 @@ function OffersListScreen (props: OfferListScreenProps):JSX.Element {
                 'near-places__card' :
                 'cities__card'}
               offer={offer}
-              setActiveOffer={
-                (currentOffer) => {
-                  setActiveOffer(currentOffer);
-                }
-              }
+              setActiveOffer={ handleClick }
             />
           ))
       }
