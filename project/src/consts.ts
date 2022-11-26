@@ -4,7 +4,7 @@ export const TIMEOUT_SHOW_ERROR = 3000;
 
 export const SORT_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
-export const CITIES: CityType[] = [
+export const CITIES_WITH_COORDINATES: CityType[] = [
   {
     name: 'Paris',
     location: {
