@@ -6,9 +6,11 @@ import TabListComponent from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
 import { getSortingFunc } from '../../utils';
-import { CITIES, SortingType } from '../../consts';
+import { CITIES } from '../../consts';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { getDataLoadingStatus, getOffers } from '../../store/app-data/selectors';
+import { getCity } from '../../store/app-process/selectors';
 
 function MainScreen (): JSX.Element {
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
@@ -19,17 +21,18 @@ function MainScreen (): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
   // копия массива предложений, в данном городе и отсортированная
-  const currentOffers = useAppSelector((state) =>
-    state.sortType === SortingType.Popular
-      ? Object.values(state.offers).filter((offer) => offer.city.name === state.city)
-      : Object.values(state.offers).filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
-  );
+  // const currentOffers = useAppSelector((state) =>
+  //   state.sortType === SortingType.Popular
+  //     ? Object.values(state.offers).filter((offer) => offer.city.name === state.city)
+  //     : Object.values(state.offers).filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
+  // );
+  const currentOffers = useAppSelector(getOffers);
 
-  const currentCityName = useAppSelector((state) => state.city);
+  const currentCityName = useAppSelector(getCity);
   const offersNumber = currentOffers.length;
   const currentCity = CITIES.find((city) => city.name === currentCityName);
 
-  if (useAppSelector((state) => state.isOffersLoading))
+  if (useAppSelector(getDataLoadingStatus))
   {
     return <LoadingScreen />;
   }
@@ -50,7 +53,7 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{ offersNumber } places to stay in { currentCityName }</b>
+            <b className="places__found">{ `${offersNumber} places to stay in ${currentCityName}` }</b>
 
             <SortingList />
 

@@ -5,27 +5,15 @@ import { Review } from '../types/review-type';
 import { changeAuthorizationStatus, changeCity, changeSortType, loadAllOffers, loadNearOffers, loadReviews, setError, setOffersLoadingStatus, setUserEmail } from './actions';
 
 type InitialState = {
-  city: string;
-  offers: NormalizedOffers;
-  nearOffers: Offer[];
-  sortType: string;
-  isOffersLoading: boolean;
+
   authorizationStatus: AuthorizationStatus;
-  error: string | null;
   userEmail: string | null;
-  reviews: Review[];
+
 }
 
 const initialState: InitialState = {
-  city: 'Paris',
-  offers: {},
-  nearOffers: [],
-  sortType: 'Popular',
-  isOffersLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
   userEmail: null,
-  reviews: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
