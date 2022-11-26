@@ -5,11 +5,10 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import TabListComponent from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
-import { getSortingFunc } from '../../utils';
-import { CITIES_WITH_COORDINATES } from '../../consts';
+import { CITIES } from '../../consts';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { getDataLoadingStatus, getOffers } from '../../store/app-data/selectors';
+import { getDataLoadingStatus } from '../../store/app-data/selectors';
 import { getCity, getProcessedOffers } from '../../store/app-process/selectors';
 
 function MainScreen (): JSX.Element {
@@ -24,7 +23,7 @@ function MainScreen (): JSX.Element {
 
   const currentCityName = useAppSelector(getCity);
   const offersNumber = currentOffers.length;
-  const currentCity = CITIES_WITH_COORDINATES.find((city) => city.name === currentCityName);
+  const currentCity = CITIES.find((city) => city.name === currentCityName);
 
   if (useAppSelector(getDataLoadingStatus))
   {
