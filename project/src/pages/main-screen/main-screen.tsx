@@ -6,11 +6,11 @@ import TabListComponent from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
 import { getSortingFunc } from '../../utils';
-import { CITIES } from '../../consts';
+import { CITIES_WITH_COORDINATES } from '../../consts';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { getDataLoadingStatus, getOffers } from '../../store/app-data/selectors';
-import { getCity } from '../../store/app-process/selectors';
+import { getCity, getProcessedOffers } from '../../store/app-process/selectors';
 
 function MainScreen (): JSX.Element {
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
@@ -20,17 +20,11 @@ function MainScreen (): JSX.Element {
   // необходим для изменения цвета маркера на карте при наведении на соответствующее предложение
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
-  // копия массива предложений, в данном городе и отсортированная
-  // const currentOffers = useAppSelector((state) =>
-  //   state.sortType === SortingType.Popular
-  //     ? Object.values(state.offers).filter((offer) => offer.city.name === state.city)
-  //     : Object.values(state.offers).filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
-  // );
-  const currentOffers = useAppSelector(getOffers);
+  const currentOffers = useAppSelector(getProcessedOffers);
 
   const currentCityName = useAppSelector(getCity);
   const offersNumber = currentOffers.length;
-  const currentCity = CITIES.find((city) => city.name === currentCityName);
+  const currentCity = CITIES_WITH_COORDINATES.find((city) => city.name === currentCityName);
 
   if (useAppSelector(getDataLoadingStatus))
   {

@@ -15,5 +15,8 @@ export const appProcess = createSlice({
       state.city = action.payload.city;
       state.sortType = 'Popular';
     },
+    changeSortType: (state, action: PayloadAction<{sortType: string}>) => {
+      state.sortType = action.payload.sortType;
+    },
   }
 });
