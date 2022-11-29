@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { CITIES } from '../../consts';
 import { useAppDispatch } from '../../hooks';
@@ -5,7 +6,7 @@ import { store } from '../../store';
 import { changeCity } from '../../store/actions';
 import { CityType } from '../../types/offer-type';
 
-export function TabListComponent(): JSX.Element {
+function TabListComponent(): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
@@ -30,3 +31,5 @@ export function TabListComponent(): JSX.Element {
     </ul>
   );
 }
+
+export default memo(TabListComponent);

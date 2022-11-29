@@ -2,13 +2,15 @@ import { useState } from 'react';
 import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
 import OffersListScreen from '../../components/offers-list/offers-list-screen';
-import { TabListComponent } from '../../components/tabs-list/tabs-list';
+import TabListComponent from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
 import { getSortingFunc } from '../../utils';
-import { CITIES, SortingType } from '../../consts';
+import { CITIES_WITH_COORDINATES } from '../../consts';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { getDataLoadingStatus, getOffers } from '../../store/app-data/selectors';
+import { getCity, getProcessedOffers } from '../../store/app-process/selectors';
 
 function MainScreen (): JSX.Element {
   //Добавляет стили для отсутствия прокрутки у блока с карточками, и вся карта видна на экране
@@ -18,22 +20,13 @@ function MainScreen (): JSX.Element {
   // необходим для изменения цвета маркера на карте при наведении на соответствующее предложение
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
-  // состояние выпадающего списка с вариантами сортировки
-  const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
+  const currentOffers = useAppSelector(getProcessedOffers);
 
-  // копия массива предложений, в данном городе и отсортированная
-  const currentOffers = useAppSelector((state) =>
-    state.sortType === SortingType.Popular
-      ? Object.values(state.offers).filter((offer) => offer.city.name === state.city)
-      : Object.values(state.offers).filter((offer) => offer.city.name === state.city).sort(getSortingFunc(state.sortType))
-  );
-
-  const sortType = useAppSelector((state) => state.sortType);
-  const currentCityName = useAppSelector((state) => state.city);
+  const currentCityName = useAppSelector(getCity);
   const offersNumber = currentOffers.length;
-  const currentCity = CITIES.find((city) => city.name === currentCityName);
+  const currentCity = CITIES_WITH_COORDINATES.find((city) => city.name === currentCityName);
 
-  if (useAppSelector((state) => state.isOffersLoading))
+  if (useAppSelector(getDataLoadingStatus))
   {
     return <LoadingScreen />;
   }
@@ -54,36 +47,15 @@ function MainScreen (): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{ offersNumber } places to stay in { currentCityName }</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by &nbsp;</span>
-              <span
-                className="places__sorting-type"
-                tabIndex={0}
-                onClick={
-                  () => { setSortingOpenStatus( !isSortingOpen ); }
-                }
-              >
-                {
-                  sortType
-                }
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
-                </svg>
-              </span>
+            <b className="places__found">{ `${offersNumber} places to stay in ${currentCityName}` }</b>
 
-              <SortingList
-                isSortingOpen={isSortingOpen}
-                setSortingOpenStatus={setSortingOpenStatus}
-              />
-
-            </form>
+            <SortingList />
 
             <OffersListScreen
               className='cities__places-list tabs__content'
-              offers={currentOffers} setActiveOffer={setActiveOffer}
+              offers={currentOffers}
+              setActiveOffer={setActiveOffer}
             />
-
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">

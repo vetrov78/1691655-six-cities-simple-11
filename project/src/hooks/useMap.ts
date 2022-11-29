@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { Map, Marker, TileLayer } from 'leaflet';
+import { Map, TileLayer } from 'leaflet';
 import { Location } from '../types/offer-type';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Location): Map | null {
@@ -12,11 +12,6 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: Location): M
     () => {
       if (isRefRendered.current && map)
       {
-        map.eachLayer((layer) => {
-          if (layer instanceof Marker) {
-            layer.remove();
-          }
-        });
         map.setView([city.latitude, city.longitude], map.getZoom(), {
           'animate': true,
           'duration': 1,

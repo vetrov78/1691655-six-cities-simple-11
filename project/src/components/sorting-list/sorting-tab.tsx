@@ -3,10 +3,10 @@ import { changeSortType } from '../../store/actions';
 
 type props = {
   sortingType: string;
-  handleCloseOpen: (value: boolean) => void;
+  setSortingOpenStatus: (arg0: boolean) => void;
 }
 
-function SortingTab ({sortingType, handleCloseOpen}: props): JSX.Element {
+function SortingTab ({sortingType, setSortingOpenStatus}: props): JSX.Element {
   const activeSortingType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
 
@@ -16,7 +16,7 @@ function SortingTab ({sortingType, handleCloseOpen}: props): JSX.Element {
       tabIndex={0}
       onClick={
         (evt) => {
-          handleCloseOpen(false);
+          setSortingOpenStatus(false);
           dispatch(changeSortType({type: (evt.target as HTMLElement).innerText}));
         }
       }
