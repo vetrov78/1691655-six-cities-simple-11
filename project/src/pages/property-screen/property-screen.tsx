@@ -8,8 +8,13 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { store } from '../../store';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
+<<<<<<< HEAD
 import { Review } from '../../types/review-type';
 import { fetchReviewsAction } from '../../store/api-actions';
+=======
+import { fetchReviewsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../consts';
+>>>>>>> 6101d60473a2cf22ece3803a8da66f94d7aa407a
 
 
 function PropertyScreen (): JSX.Element {
@@ -17,8 +22,8 @@ function PropertyScreen (): JSX.Element {
 
   const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === id);
 
+  const isAuth = useAppSelector((state) => state.authorizationStatus === AuthorizationStatus.Auth);
   const nearOffers: Offer[] = useAppSelector((state) => state.nearOffers);
-  const reviews: Review[] = useAppSelector((state) => state.reviews);
 
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = '';
@@ -122,6 +127,7 @@ function PropertyScreen (): JSX.Element {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
+<<<<<<< HEAD
 
                   <ReviewsListScreen reviews={reviews} />
 
@@ -129,6 +135,12 @@ function PropertyScreen (): JSX.Element {
                     <ReviewFormScreen />
                   }
 
+=======
+                  <ReviewsListScreen />
+                  {
+                    isAuth ? <ReviewFormScreen /> : <div />
+                  }
+>>>>>>> 6101d60473a2cf22ece3803a8da66f94d7aa407a
                 </section>
               </div>
             </div>

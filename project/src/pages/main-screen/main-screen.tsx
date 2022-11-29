@@ -81,7 +81,8 @@ function MainScreen (): JSX.Element {
 
             <OffersListScreen
               className='cities__places-list tabs__content'
-              offers={currentOffers} setActiveOffer={setActiveOffer}
+              offers={currentOffers}
+              setActiveOffer={setActiveOffer}
             />
 
           </section>

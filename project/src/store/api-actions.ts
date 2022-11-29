@@ -38,6 +38,7 @@ export const fetchNearOffersAction = createAsyncThunk<void, number, {
       const {data} = await api.get<Offer[]>(`${ApiRoutes.Offers}/${id}/nearby`);
 
       dispatch(loadNearOffers(data));
+
     } catch {
       dispatch(loadNearOffers([] as Offer[]));
     }
@@ -115,10 +116,10 @@ export const postReviewAction = createAsyncThunk<void, {
 }> (
   'reviews/postReview',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Review>(`${ApiRoutes.Reviews}/${hotelId}`, {comment, rating});
+    const {data} = await api.post<Review[]>(`${ApiRoutes.Reviews}/${hotelId}`, {comment, rating});
 
-    // eslint-disable-next-line no-console
-    console.log(data);
+    dispatch(loadReviews(data));
+    window.scroll(0, 0);
   }
 );
 

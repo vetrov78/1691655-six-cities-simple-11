@@ -29,6 +29,12 @@ function Map (props: MapProps):JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.eachLayer((layer) => {
+        if (layer instanceof Marker) {
+          layer.remove();
+        }
+      });
+
       const markersLayer = new LayerGroup();
 
       offers.forEach((offer) => {
