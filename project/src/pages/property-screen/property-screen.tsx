@@ -12,6 +12,7 @@ import { fetchReviewsAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../../consts';
 import { getNearOffers, getOffers } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 
 function PropertyScreen (): JSX.Element {
@@ -20,8 +21,6 @@ function PropertyScreen (): JSX.Element {
   const currentOffer: Offer | undefined = Object.values(useAppSelector(getOffers)).find((offer) => offer.id === id);
 
   const isAuth = useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
-
-  console.log(isAuth);
 
   const nearOffers: Offer[] = useAppSelector(getNearOffers);
 
@@ -151,7 +150,7 @@ function PropertyScreen (): JSX.Element {
     );
   } else {
     return (
-      <div className="page">404 - Page not found</div>
+      <NotFoundScreen />
     );
   }
 }

@@ -1,8 +1,9 @@
-import { FormEvent, useEffect, useRef } from 'react';
+import React, { FormEvent, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../consts';
+import { AppRoute, AuthorizationStatus, CITIES_WITH_COORDINATES } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { changeCity } from '../../store/app-process/app-process';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthData } from '../../types/auth-data';
 
@@ -27,6 +28,15 @@ function LoginScreen ():JSX.Element {
         password: passwordRef.current.value,
       });
     }
+  };
+
+  const randomCity = CITIES_WITH_COORDINATES[Math.floor(Math.random() * CITIES_WITH_COORDINATES.length)];
+
+  const handleRandomCityClick = (evt: React.MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+
+    dispatch(changeCity({city: (evt.target as HTMLElement).innerText}));
+    navigate(AppRoute.Root);
   };
 
   useEffect(() => {
@@ -93,9 +103,13 @@ function LoginScreen ():JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to='/'
+                onClick={handleRandomCityClick}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

@@ -12,4 +12,4 @@ export const getProcessedOffers = (state: State): Offer[] => state[NameSpace.Pro
     .filter((offer) => offer.city.name === state[NameSpace.Process].city)
   : Object.values(state[NameSpace.Data].offers)
     .filter((offer) => offer.city.name === state[NameSpace.Process].city)
-    .sort(getSortingFunc(state[NameSpace.Process].sortType))
+    .sort(getSortingFunc(state[NameSpace.Process].sortType));

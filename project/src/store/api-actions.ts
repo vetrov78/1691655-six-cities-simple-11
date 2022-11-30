@@ -2,13 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer-type';
-import { ApiRoutes, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../consts';
+import { ApiRoutes } from '../consts';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { ResponseUserData } from '../types/response-user-data';
 import { Review } from '../types/review-type';
-import { setUserEmail } from './user-process/user-process';
 
 export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
   state: State;
@@ -29,12 +28,10 @@ export const checkAuthAction = createAsyncThunk<string, undefined, {
 }> (
   'user/checkAuth',
   async (_args, {dispatch, extra: api}) => {
-      const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
+    const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
 
-      console.log('checkAuthAction');
-
-      return data.email
-    }
+    return data.email;
+  }
 );
 
 export const fetchNearOffersAction = createAsyncThunk<Offer[], number, {

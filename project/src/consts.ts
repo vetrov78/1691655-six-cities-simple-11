@@ -1,7 +1,5 @@
 import { CityType } from './types/offer-type';
 
-export const TIMEOUT_SHOW_ERROR = 3000;
-
 export const SORT_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 export const RATES_TYPES = ['terribly', 'badly', 'not bad', 'good', 'perfect'];

@@ -13,7 +13,9 @@ function RewievFormScreen (): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleRatingClick = (evt: React.MouseEvent<HTMLElement>, rating: number) => {
+  const handleRatingClick = (evt: ChangeEvent<HTMLElement>, rating: number) => {
+    evt.preventDefault();
+
     setRate(rating);
   };
 
@@ -53,7 +55,7 @@ function RewievFormScreen (): JSX.Element {
                 name="rating"
                 id={`${i}-stars`}
                 type="radio"
-                onChange={ () => setRate(5 - i) }
+                onChange={ (evt) => handleRatingClick(evt, 5 - i) }
                 checked={ rate === 5 - i }
               />
               <label
