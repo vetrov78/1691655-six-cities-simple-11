@@ -1,11 +1,12 @@
 import { format } from 'date-fns';
 import { useAppSelector } from '../../hooks';
+import { getReviews } from '../../store/app-data/selectors';
 import { Review } from '../../types/review-type';
 import { getRatingInProcent } from '../../utils';
 
 
 function ReviewsListScreen ():JSX.Element {
-  const reviews: Review[] = useAppSelector((state) => state.reviews);
+  const reviews: Review[] = useAppSelector(getReviews);
 
   return (
     <>

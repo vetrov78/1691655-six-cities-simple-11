@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthData } from '../../types/auth-data';
 
 function LoginScreen ():JSX.Element {
@@ -11,7 +12,7 @@ function LoginScreen ():JSX.Element {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

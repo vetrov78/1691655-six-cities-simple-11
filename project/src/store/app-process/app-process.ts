@@ -7,7 +7,7 @@ const initialState: AppProcess = {
   sortType: 'Popular',
 };
 
-export const appProcess = createSlice({
+const appProcess = createSlice({
   name: NameSpace.Process,
   initialState,
   reducers: {
@@ -20,3 +20,8 @@ export const appProcess = createSlice({
     },
   }
 });
+
+export default appProcess;
+
+export const {changeCity, changeSortType} = appProcess.actions;
+

@@ -1,11 +1,23 @@
-import { useAppSelector } from '../../hooks';
+import {useAppDispatch} from '../../hooks';
+import {fetchAllOffersAction} from '../../store/api-actions';
 
-function ErrorMessage(): JSX.Element | null {
-  const error = useAppSelector((state) => state.error);
+function ErrorScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-  return (error)
-    ? <div>{error}</div>
-    : null;
+  return (
+    <>
+      <p className="error__text">Не удалось загрузить вопросы</p>
+      <button
+        onClick={() => {
+          dispatch(fetchAllOffersAction());
+        }}
+        className="replay replay--error"
+        type="button"
+      >
+        Попробовать ещё раз
+      </button>
+    </>
+  );
 }
 
-export default ErrorMessage;
+export default ErrorScreen;

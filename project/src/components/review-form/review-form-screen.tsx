@@ -65,7 +65,7 @@ function RewievFormScreen (): JSX.Element {
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </React.Fragment>
           ))
         }
       </div>

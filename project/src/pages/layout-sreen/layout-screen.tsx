@@ -3,10 +3,11 @@ import { AppRoute, AuthorizationStatus } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { dropToken } from '../../services/token';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getUserEmail } from '../../store/user-process/selectors';
 
 function LayoutScreen (): JSX.Element {
-  const isAuth: boolean = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
-  const userEmail = useAppSelector((state) => state.userEmail);
+  const isAuth: boolean = useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
+  const userEmail = useAppSelector(getUserEmail);
 
   const dispatch = useAppDispatch();
   const onSignOut = () => {
