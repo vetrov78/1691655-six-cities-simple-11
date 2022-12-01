@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { SORT_TYPES } from '../../consts';
 import { useAppSelector } from '../../hooks';
+import { getSortType } from '../../store/app-process/selectors';
 import SortingTab from './sorting-tab';
 
 function SortingList (): JSX.Element {
-  const sortType = useAppSelector((state) => state.sortType);
+  const sortType = useAppSelector(getSortType);
   const [isSortingOpen, setSortingOpenStatus] = useState<boolean>(false);
 
   return (

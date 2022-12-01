@@ -1,18 +1,21 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { RATES_TYPES } from '../../consts';
 import { useAppDispatch } from '../../hooks';
 import { postReviewAction } from '../../store/api-actions';
 
 
 function RewievFormScreen (): JSX.Element {
   const [text, setText] = useState<string>('');
-  const [rate, setRate] = useState<number | null>(null);
+  const [rate, setRate] = useState<number>(0);
 
   const hotelId = Number(useParams().id);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleRatingClick = (evt: React.MouseEvent<HTMLElement>, rating: number) => {
+  const handleRatingClick = (evt: ChangeEvent<HTMLElement>, rating: number) => {
+    evt.preventDefault();
+
     setRate(rating);
   };
 
@@ -31,6 +34,7 @@ function RewievFormScreen (): JSX.Element {
       }));
     }
     setText('');
+    setRate(0);
   };
 
 
@@ -44,20 +48,26 @@ function RewievFormScreen (): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
-          [...Array<number>(5).fill(0)].map((_, i) => (
-            <>
-              <input className="form__rating-input visually-hidden" name="rating" value={`${i}`} id={`${i}-stars`} type="radio" />
+          RATES_TYPES.map((element, i) => (
+            <React.Fragment key={element}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                id={`${i}-stars`}
+                type="radio"
+                onChange={ (evt) => handleRatingClick(evt, 5 - i) }
+                checked={ rate === 5 - i }
+              />
               <label
                 htmlFor={`${i}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title="perfect"
-                onClick={(evt) => handleRatingClick(evt, 5 - i)}
+                title={element}
               >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </React.Fragment>
           ))
         }
       </div>

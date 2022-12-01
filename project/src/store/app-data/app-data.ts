@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { AppData } from '../../types/state';
-import { fetchAllOffersAction, fetchNearOffersAction, fetchReviewsAction } from '../api-actions';
+import { fetchAllOffersAction, fetchNearOffersAction, fetchReviewsAction, postReviewAction } from '../api-actions';
 
 const initialState: AppData = {
   offers: {},
@@ -28,6 +28,7 @@ export const appData = createSlice({
             [element.id]: element
           }
         ), {});
+        state.isOffersLoading = false;
       })
       .addCase(fetchAllOffersAction.rejected, ((state) => {
         state.isOffersLoading = false;
@@ -39,8 +40,11 @@ export const appData = createSlice({
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
       })
-      .addCase(fetchReviewsAction.rejected, ((state) => {
+      .addCase(fetchReviewsAction.rejected, (state) => {
         state.hasError = true;
-      }));
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+      });
   }
 });

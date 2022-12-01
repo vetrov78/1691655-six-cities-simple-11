@@ -8,22 +8,21 @@ import OffersListScreen from '../../components/offers-list/offers-list-screen';
 import { store } from '../../store';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
-<<<<<<< HEAD
-import { Review } from '../../types/review-type';
-import { fetchReviewsAction } from '../../store/api-actions';
-=======
 import { fetchReviewsAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../../consts';
->>>>>>> 6101d60473a2cf22ece3803a8da66f94d7aa407a
+import { getNearOffers, getOffers } from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 
 function PropertyScreen (): JSX.Element {
   const id = Number(useParams().id);
 
-  const currentOffer: Offer | undefined = Object.values(store.getState().offers).find((offer) => offer.id === id);
+  const currentOffer: Offer | undefined = Object.values(useAppSelector(getOffers)).find((offer) => offer.id === id);
 
-  const isAuth = useAppSelector((state) => state.authorizationStatus === AuthorizationStatus.Auth);
-  const nearOffers: Offer[] = useAppSelector((state) => state.nearOffers);
+  const isAuth = useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
+
+  const nearOffers: Offer[] = useAppSelector(getNearOffers);
 
   const root = document.getElementById('root') as HTMLElement;
   root.style.cssText = '';
@@ -127,20 +126,10 @@ function PropertyScreen (): JSX.Element {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-<<<<<<< HEAD
-
-                  <ReviewsListScreen reviews={reviews} />
-
-                  {
-                    <ReviewFormScreen />
-                  }
-
-=======
                   <ReviewsListScreen />
                   {
                     isAuth ? <ReviewFormScreen /> : <div />
                   }
->>>>>>> 6101d60473a2cf22ece3803a8da66f94d7aa407a
                 </section>
               </div>
             </div>
@@ -161,7 +150,7 @@ function PropertyScreen (): JSX.Element {
     );
   } else {
     return (
-      <div className="page">404 - Page not found</div>
+      <NotFoundScreen />
     );
   }
 }

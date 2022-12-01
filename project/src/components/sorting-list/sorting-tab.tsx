@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSortType } from '../../store/actions';
+import { changeSortType } from '../../store/app-process/app-process';
+import { getSortType } from '../../store/app-process/selectors';
 
 type props = {
   sortingType: string;
@@ -7,7 +8,7 @@ type props = {
 }
 
 function SortingTab ({sortingType, setSortingOpenStatus}: props): JSX.Element {
-  const activeSortingType = useAppSelector((state) => state.sortType);
+  const activeSortingType = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
 
   return (
@@ -17,7 +18,7 @@ function SortingTab ({sortingType, setSortingOpenStatus}: props): JSX.Element {
       onClick={
         (evt) => {
           setSortingOpenStatus(false);
-          dispatch(changeSortType({type: (evt.target as HTMLElement).innerText}));
+          dispatch(changeSortType({sortType: (evt.target as HTMLElement).innerText}));
         }
       }
     >

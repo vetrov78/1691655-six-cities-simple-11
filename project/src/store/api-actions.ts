@@ -2,13 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer-type';
-import { changeAuthorizationStatus, loadNearOffers, loadReviews, setError, setUserEmail } from './actions';
-import { ApiRoutes, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../consts';
+import { ApiRoutes } from '../consts';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { ResponseUserData } from '../types/response-user-data';
-import { store } from '.';
 import { Review } from '../types/review-type';
 
 export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
@@ -20,6 +18,19 @@ export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
     const {data} = await api.get<Offer[]>(ApiRoutes.Offers);
 
     return data;
+  }
+);
+
+export const checkAuthAction = createAsyncThunk<string, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}> (
+  'user/checkAuth',
+  async (_args, {dispatch, extra: api}) => {
+    const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
+
+    return data.email;
   }
 );
 
@@ -49,37 +60,18 @@ export const fetchReviewsAction = createAsyncThunk<Review[], number, {
   }
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}> (
-  'user/checkAuth',
-  async (_args, {dispatch, extra: api}) => {
-
-    try {
-      const {data} = await api.get<ResponseUserData>(ApiRoutes.Login);
-
-      dispatch(setUserEmail(data.email));
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
-    }
-  }
-);
-
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<string, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }> (
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(ApiRoutes.Login, {email, password});
+    const {data} = await api.post<UserData>(ApiRoutes.Login, {email, password});
 
-    saveToken(token);
-    dispatch(changeAuthorizationStatus(AuthorizationStatus.Auth));
-    dispatch(setUserEmail(email));
+    saveToken(data.token);
+
+    return data.email;
   }
 );
 
@@ -92,11 +84,10 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_args, {dispatch, extra: api}) => {
     await api.delete(ApiRoutes.Logout);
     dropToken();
-    dispatch(changeAuthorizationStatus(AuthorizationStatus.NoAuth));
   }
 );
 
-export const postReviewAction = createAsyncThunk<void, {
+export const postReviewAction = createAsyncThunk<Review[], {
   hotelId: number;
   comment: string;
   rating: number;
@@ -109,17 +100,8 @@ export const postReviewAction = createAsyncThunk<void, {
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
     const {data} = await api.post<Review[]>(`${ApiRoutes.Reviews}/${hotelId}`, {comment, rating});
 
-    dispatch(loadReviews(data));
     window.scroll(0, 0);
-  }
-);
 
-export const clearErrorAction = createAsyncThunk(
-  'data/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
+    return data;
+  }
 );
