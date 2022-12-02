@@ -21,8 +21,7 @@ function LoginScreen ():JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && regex.test(passwordRef.current!.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -30,8 +29,19 @@ function LoginScreen ():JSX.Element {
     }
   };
 
-  const randomCity = CITIES_WITH_COORDINATES[Math.floor(Math.random() * CITIES_WITH_COORDINATES.length)];
+  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*[^ a-zA-Z0-9]).*$/;
 
+  const handlePasswordChange = () => {
+    console.log(passwordRef.current?.value);
+
+    if (passwordRef.current) {
+      !regex.test(passwordRef.current.value)
+        ? passwordRef.current.setCustomValidity('input proper password')
+        : passwordRef.current.setCustomValidity('');
+    }
+  };
+
+  const randomCity = CITIES_WITH_COORDINATES[Math.floor(Math.random() * CITIES_WITH_COORDINATES.length)];
   const handleRandomCityClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
@@ -53,7 +63,6 @@ function LoginScreen ():JSX.Element {
 
   return (
     <div className="page page--gray page--login">
-
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -65,7 +74,6 @@ function LoginScreen ():JSX.Element {
           </div>
         </div>
       </header>
-
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -91,6 +99,7 @@ function LoginScreen ():JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input
                   ref={passwordRef}
+                  onChange={handlePasswordChange}
                   className="login__input form__input"
                   type="password"
                   name="password"
