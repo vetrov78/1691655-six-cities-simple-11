@@ -32,8 +32,6 @@ function LoginScreen ():JSX.Element {
   const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*[^ a-zA-Z0-9]).*$/;
 
   const handlePasswordChange = () => {
-    console.log(passwordRef.current?.value);
-
     if (passwordRef.current) {
       !regex.test(passwordRef.current.value)
         ? passwordRef.current.setCustomValidity('input proper password')

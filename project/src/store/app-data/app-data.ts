@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { AppData } from '../../types/state';
+import { normalizeArray } from '../../utils';
 import { fetchAllOffersAction, fetchNearOffersAction, fetchReviewsAction, postReviewAction } from '../api-actions';
 
 const initialState: AppData = {
@@ -22,12 +23,7 @@ export const appData = createSlice({
         state.hasError = false;
       })
       .addCase(fetchAllOffersAction.fulfilled, (state, action) => {
-        state.offers = action.payload.reduce((result, element) => (
-          {
-            ...result,
-            [element.id]: element
-          }
-        ), {});
+        state.offers = normalizeArray(action.payload);
         state.isOffersLoading = false;
       })
       .addCase(fetchAllOffersAction.rejected, ((state) => {

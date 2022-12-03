@@ -1,5 +1,5 @@
 import { Offer } from '../types/offer-type';
-import { name, address, lorem, random } from 'faker';
+import { name, address, lorem, random, image } from 'faker';
 
 export const makeFakeOffer = (): Offer => ({
   bedrooms: Number(random.number(9)),
@@ -14,28 +14,13 @@ export const makeFakeOffer = (): Offer => ({
   description: lorem.paragraph(3),
   goods: ['Washer', 'Laptop friendly workspace', 'Breakfast'],
   host: {
-    id: 25,
-    name: 'Angelina',
-    isPro: true,
-    avatarUrl: 'img/avatar-angelina.jpg'
+    id: random.number(2),
+    name: name.firstName(25),
+    isPro: Math.random() < 0.5,
+    avatarUrl: image.imageUrl(),
   },
-  id: 5,
-  images: [
-    "https://11.react.pages.academy/static/hotel/6.jpg",
-    "https://11.react.pages.academy/static/hotel/18.jpg",
-    "https://11.react.pages.academy/static/hotel/2.jpg",
-    "https://11.react.pages.academy/static/hotel/4.jpg",
-    "https://11.react.pages.academy/static/hotel/11.jpg",
-    "https://11.react.pages.academy/static/hotel/1.jpg",
-    "https://11.react.pages.academy/static/hotel/12.jpg",
-    "https://11.react.pages.academy/static/hotel/15.jpg",
-    "https://11.react.pages.academy/static/hotel/13.jpg",
-    "https://11.react.pages.academy/static/hotel/16.jpg",
-    "https://11.react.pages.academy/static/hotel/5.jpg",
-    "https://11.react.pages.academy/static/hotel/14.jpg",
-    "https://11.react.pages.academy/static/hotel/19.jpg",
-    "https://11.react.pages.academy/static/hotel/8.jpg"
-  ],
+  id: random.number(2),
+  images: Array(random.number(2)).fill(image.imageUrl()),
   isPremium: false,
   location: {
     "latitude": 48.846610000000005,
