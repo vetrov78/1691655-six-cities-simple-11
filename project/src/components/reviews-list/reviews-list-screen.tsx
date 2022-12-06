@@ -4,6 +4,11 @@ import { getReviews } from '../../store/app-data/selectors';
 import { Review } from '../../types/review-type';
 import { getRatingInProcent } from '../../utils';
 
+const getProperDate = (date: Date): string  => {
+  const properDateString= date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
+  return properDateString;
+}
 
 function ReviewsListScreen ():JSX.Element {
   const reviews: Review[] = useAppSelector(getReviews);
@@ -35,7 +40,7 @@ function ReviewsListScreen ():JSX.Element {
                   <p className="reviews__text">
                     {review.comment}
                   </p>
-                  <time className="reviews__time" dateTime="2019-04-24">{format(new Date(review.date), 'dd/mm/yy')}</time>
+                  <time className="reviews__time" dateTime="2019-04-24">{ getProperDate(new Date(review.date)) }</time>
                 </div>
               </li>)
             )

@@ -29,12 +29,11 @@ function LoginScreen ():JSX.Element {
     }
   };
 
-  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*[^ a-zA-Z0-9]).*$/;
-
+  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[a-zA-Z])(?!.*[^ a-zA-Z0-9]).*$/;
   const handlePasswordChange = () => {
     if (passwordRef.current) {
       !regex.test(passwordRef.current.value)
-        ? passwordRef.current.setCustomValidity('input proper password')
+        ? passwordRef.current.setCustomValidity('Введите правильный пароль')
         : passwordRef.current.setCustomValidity('');
     }
   };
@@ -58,6 +57,12 @@ function LoginScreen ():JSX.Element {
       isLogin = false;
     };
   }, [authStatus]);
+
+  const passwordHintStyle = {
+    marginTop: '-15px',
+    marginBottom: '30px',
+    color: 'red',
+  };
 
   return (
     <div className="page page--gray page--login">
@@ -104,6 +109,12 @@ function LoginScreen ():JSX.Element {
                   placeholder="Password"
                   required
                 />
+                <div
+                  className='place-card__type'
+                  style={passwordHintStyle}
+                >
+                  Пароль должен состоять минимум из одной буквы и цифры (буквы латинские)
+                </div>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
