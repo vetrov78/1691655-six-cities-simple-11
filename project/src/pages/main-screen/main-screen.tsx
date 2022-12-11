@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { Offer } from '../../types/offer-type';
-import OffersListScreen from '../../components/offers-list/offers-list-screen';
+import OffersListScreen from '../../components/offers-list/offers-list';
 import TabListComponent from '../../components/tabs-list/tabs-list';
 import { useAppSelector } from '../../hooks';
 import SortingList from '../../components/sorting-list/sorting-list';
