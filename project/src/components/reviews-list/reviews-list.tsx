@@ -1,20 +1,28 @@
-import { format } from 'date-fns';
 import { useAppSelector } from '../../hooks';
 import { getReviews } from '../../store/app-data/selectors';
 import { Review } from '../../types/review-type';
 import { getRatingInProcent } from '../../utils';
 
+type props = {
+  reviews: Review[],
+}
 
-function ReviewsListScreen ():JSX.Element {
-  const reviews: Review[] = useAppSelector(getReviews);
+const getProperDate = (date: Date): string  => {
+  const properDateString= date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
+  return properDateString;
+}
+
+function ReviewsList ({reviews}: props):JSX.Element {
+  const reviewsNumber = useAppSelector(getReviews).length;
 
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ reviews.length }</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ reviewsNumber }</span></h2>
       <ul className="reviews__list">
         {
           reviews &&
-            reviews.map( (review) => (
+            reviews.slice(0, 10).map( (review) => (
               <li key={review.id} className="reviews__item">
                 <div className="reviews__user user">
                   <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -35,7 +43,7 @@ function ReviewsListScreen ():JSX.Element {
                   <p className="reviews__text">
                     {review.comment}
                   </p>
-                  <time className="reviews__time" dateTime="2019-04-24">{format(new Date(review.date), 'dd/mm/yy')}</time>
+                  <time className="reviews__time" dateTime="2019-04-24">{ getProperDate(new Date(review.date)) }</time>
                 </div>
               </li>)
             )
@@ -45,4 +53,4 @@ function ReviewsListScreen ():JSX.Element {
   );
 }
 
-export default ReviewsListScreen;
+export default ReviewsList;

@@ -1,18 +1,19 @@
 import { useParams } from 'react-router';
 import Map from '../../components/map/map';
-import ReviewFormScreen from '../../components/review-form/review-form-screen';
-import ReviewsListScreen from '../../components/reviews-list/reviews-list-screen';
+import ReviewFormScreen from '../../components/review-form/review-form';
+import ReviewsListScreen from '../../components/reviews-list/reviews-list';
 import { Offer } from '../../types/offer-type';
 import { getRatingInProcent } from '../../utils';
-import OffersListScreen from '../../components/offers-list/offers-list-screen';
+import OffersListScreen from '../../components/offers-list/offers-list';
 import { store } from '../../store';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { fetchReviewsAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../consts';
+import { AuthorizationStatus, REVIEWS_PER_PAGE } from '../../consts';
 import { getNearOffers, getOffers } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import PaginatedReviews from '../../components/reviews-list/paginated-reviews';
 
 
 function PropertyScreen (): JSX.Element {
@@ -126,7 +127,7 @@ function PropertyScreen (): JSX.Element {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <ReviewsListScreen />
+                  <PaginatedReviews reviewsPerPage={REVIEWS_PER_PAGE} />
                   {
                     isAuth ? <ReviewFormScreen /> : <div />
                   }

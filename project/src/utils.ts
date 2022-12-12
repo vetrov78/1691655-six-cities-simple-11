@@ -7,6 +7,14 @@ export const getRatingInProcent = (rating:number) => {
   return `${result}%`;
 };
 
+export const normalizeArray = (array: Array<Offer>): {[id: string]: Offer} =>
+  array.reduce((result, element) => (
+    {
+      ...result,
+      [element.id]: element
+    }
+  ), {});
+
 const sortPriceStartHigh = (offer1: Offer, offer2: Offer) => {
   const {price: priceOne} = offer1;
   const {price: priceTwo} = offer2;
