@@ -21,8 +21,7 @@ function LoginScreen ():JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && regex.test(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -30,8 +29,16 @@ function LoginScreen ():JSX.Element {
     }
   };
 
-  const randomCity = CITIES_WITH_COORDINATES[Math.floor(Math.random() * CITIES_WITH_COORDINATES.length)];
+  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[a-zA-Z])(?!.*[^ a-zA-Z0-9]).*$/;
+  const handlePasswordChange = () => {
+    if (passwordRef.current) {
+      !regex.test(passwordRef.current.value)
+        ? passwordRef.current.setCustomValidity('Введите правильный пароль')
+        : passwordRef.current.setCustomValidity('');
+    }
+  };
 
+  const randomCity = CITIES_WITH_COORDINATES[Math.floor(Math.random() * CITIES_WITH_COORDINATES.length)];
   const handleRandomCityClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
@@ -51,9 +58,14 @@ function LoginScreen ():JSX.Element {
     };
   }, [authStatus]);
 
+  const passwordHintStyle = {
+    marginTop: '-15px',
+    marginBottom: '30px',
+    color: 'red',
+  };
+
   return (
     <div className="page page--gray page--login">
-
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -65,7 +77,6 @@ function LoginScreen ():JSX.Element {
           </div>
         </div>
       </header>
-
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -91,12 +102,19 @@ function LoginScreen ():JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input
                   ref={passwordRef}
+                  onChange={handlePasswordChange}
                   className="login__input form__input"
                   type="password"
                   name="password"
                   placeholder="Password"
                   required
                 />
+                <div
+                  className='place-card__type'
+                  style={passwordHintStyle}
+                >
+                  Пароль должен состоять минимум из одной буквы и цифры (буквы латинские)
+                </div>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
