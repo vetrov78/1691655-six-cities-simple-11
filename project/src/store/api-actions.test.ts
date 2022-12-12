@@ -8,7 +8,6 @@ import { ApiRoutes } from '../consts';
 import { checkAuthAction, fetchAllOffersAction, loginAction, logoutAction } from './api-actions';
 import { makeFakeOffer } from '../utils/mock';
 import { AuthData } from '../types/auth-data';
-import exp from 'constants';
 
 describe ('Async actions', () => {
   const api = createAPI();
