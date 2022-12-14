@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RATES_TYPES } from '../../consts';
+import { MAX_REVIEW_LENGHT, MIN_REVIEW_LENGHT, RATES_TYPES } from '../../consts';
 import { useAppDispatch } from '../../hooks';
 import { postReviewAction } from '../../store/api-actions';
 
@@ -91,12 +91,18 @@ function RewievFormScreen (): JSX.Element {
         </textarea>
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
-            To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+            To submit review please make sure to set
+            <span className="reviews__star">rating</span>
+            and describe your stay with at least&nbsp;
+            <b className="reviews__text-amount">50 characters</b>
+            &nbsp;and&nbsp;
+            <b className="reviews__text-amount">300 characters</b>
+            &nbsp;maximum.
           </p>
           <button
             className="reviews__submit form__submit button"
             type="submit"
-            disabled={!(rate && text.length > 50)}
+            disabled={!(rate && text.length > MIN_REVIEW_LENGHT && text.length < MAX_REVIEW_LENGHT)}
           >
             Submit
           </button>
