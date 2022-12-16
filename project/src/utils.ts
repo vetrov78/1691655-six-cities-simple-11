@@ -1,5 +1,6 @@
 import { SortingType } from './consts';
 import { Offer } from './types/offer-type';
+import { Review } from './types/review-type';
 
 export const getRatingInProcent = (rating:number) => {
   const result = Math.round(rating) * 20;
@@ -46,4 +47,11 @@ export const getSortingFunc = (sortType: string) => {
       return sortByRating;
   }
   return (a: Offer, b: Offer) => 1;
+};
+
+export const sortTwoReviewsByDate = (reviewOne: Review, reviewTwo: Review) => {
+  const dateOne = new Date(reviewOne.date).getTime();
+  const dateTwo = new Date(reviewTwo.date).getTime();
+
+  return dateOne < dateTwo ? 1 : -1;
 };
