@@ -56,3 +56,10 @@ export const sortTwoReviewsByDate = (reviewOne: Review, reviewTwo: Review) => {
 
   return dateOne < dateTwo ? 1 : -1;
 };
+
+export const sortTwoReviewsByDate = (reviewOne: Review, reviewTwo: Review) => {
+  const dateOne = new Date(reviewOne.date).getTime();
+  const dateTwo = new Date(reviewTwo.date).getTime();
+
+  return dateOne < dateTwo ? 1 : -1;
+};
